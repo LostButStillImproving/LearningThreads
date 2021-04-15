@@ -27,7 +27,6 @@ public class TalkingThreadRunnable implements Runnable {
 
     public static Callback startPool(int amountOfThreads, int delay) {
         ScheduledExecutorService pool = Executors.newScheduledThreadPool(1000);
-
         IntStream.rangeClosed(1,amountOfThreads).forEach(number -> pool.schedule(
                 new TalkingThreadRunnable(number), (long)number*delay, TimeUnit.MILLISECONDS));
 
@@ -38,18 +37,13 @@ public class TalkingThreadRunnable implements Runnable {
         new Thread(callback::onCallBack).start();
     }
     public interface Callback {
-        void onCallBack() throws MyOwnRuntimeException;
+        void onCallBack();
     }
-
-    public static class MyOwnRuntimeException extends RuntimeException {
-        public MyOwnRuntimeException() {
-            //getting out of thread exception
-        }
-    }
-
 
     public static void main(String[] args) {
-        spawnThread(startPool(11,250));
-        spawnThread(startPool(10,250));
+        spawnThread(startPool(10,1000));
+        spawnThread(startPool(20,500));
+        spawnThread(startPool(40,250));
+        spawnThread(startPool(80,125));
     }
 }
