@@ -26,9 +26,9 @@ public class TalkingThreadRunnable implements Runnable {
     }
 
     public static Callback startPool(int amountOfThreads, int delay) {
-        ScheduledExecutorService pool = Executors.newScheduledThreadPool(1000);
+        ScheduledExecutorService pool = Executors.newScheduledThreadPool(3);
         IntStream.rangeClosed(1,amountOfThreads).forEach(number -> pool.schedule(
-                new TalkingThreadRunnable(number), (long)number*delay, TimeUnit.MILLISECONDS));
+                getRunnable(number), (long) number * delay, TimeUnit.MILLISECONDS));
 
         return pool::shutdown;
     }
@@ -39,11 +39,16 @@ public class TalkingThreadRunnable implements Runnable {
     public interface Callback {
         void onCallBack();
     }
+    public static TalkingThreadRunnable getRunnable(int threadNumber) {
 
+        return new TalkingThreadRunnable(threadNumber);
+
+    }
     public static void main(String[] args) {
         spawnThread(startPool(10,1000));
         spawnThread(startPool(20,500));
         spawnThread(startPool(40,250));
         spawnThread(startPool(80,125));
+        spawnThread(() -> IntStream.rangeClosed(1,10).forEach(System.out::println));
     }
 }
