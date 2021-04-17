@@ -18,15 +18,6 @@ public class PoolService {
     public static void main(String[] args) {
         startPool(10,20);
         startPool(10,20);
-        startPool(10,20);
-        startPool(10,20);
-        startPool(10,20);
-        startPool(10,20);
-        startPool(10,20);
-        startPool(10,20);
-        startPool(10,20);
-        startPool(10,20);
-        startPool(10,20);
-        startPool(10,20);
+
     }
 }
